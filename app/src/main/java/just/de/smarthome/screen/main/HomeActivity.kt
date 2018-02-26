@@ -1,21 +1,35 @@
-package just.de.smarthome
+package just.de.smarthome.screen.main
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.FrameLayout
 import android.widget.Toast
+import just.de.smarthome.R
+import just.de.smarthome.device.Device
+import just.de.smarthome.room.Room
 import kotlinx.android.synthetic.main.activity_home.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import java.net.URL
+import java.io.File
 
 class HomeActivity : AppCompatActivity(), RoomsFragment.OnFragmentInteractionListener, DevicesFragment.OnListFragmentInteractionListener {
 
-    private var content: FrameLayout? = null
+    var file:File? = null
+
+    companion object {
+
+        val FILE_NAME = "just.de.smarthome.data"
+        private const val ROOM_NAME = "room_name"
+
+
+        fun newIntent(context: Context, room: Room): Intent {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(HomeActivity.ROOM_NAME, room.name)
+            return intent
+        }
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
@@ -43,10 +57,11 @@ class HomeActivity : AppCompatActivity(), RoomsFragment.OnFragmentInteractionLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        file = File(this.filesDir, FILE_NAME)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-
-        val fragment = RoomsFragment.Companion.newInstance("","")
+        val roomName = intent.getStringExtra(HomeActivity.ROOM_NAME)
+        val fragment = RoomsFragment.Companion.newInstance(roomName, "")
         addFragment(fragment)
     }
 
@@ -57,7 +72,7 @@ class HomeActivity : AppCompatActivity(), RoomsFragment.OnFragmentInteractionLis
     }
 
     override fun onFragmentInteraction(uri: Uri) {
-        Toast.makeText(this,"Fragment change", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Fragment change", Toast.LENGTH_SHORT).show()
     }
 
     override fun onListFragmentInteraction(item: Device) {

@@ -1,4 +1,4 @@
-package just.de.smarthome
+package just.de.smarthome.screen.main
 
 import android.content.Context
 import android.net.Uri
@@ -9,6 +9,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import just.de.smarthome.R
+import just.de.smarthome.adapter.MyItemRecyclerViewAdapter
+import just.de.smarthome.adapter.RoomAdapter
+import just.de.smarthome.data.DatabaseHelper
+import just.de.smarthome.room.Room
 import kotlinx.android.synthetic.main.fragment_rooms.*
 
 
@@ -23,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_rooms.*
 class RoomsFragment : Fragment() {
 
     // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
+    private var roomName: String? = null
     private var mParam2: String? = null
 
     private var mListener: OnFragmentInteractionListener? = null
@@ -33,7 +38,7 @@ class RoomsFragment : Fragment() {
         Log.d("RoomsFragment", "On Create")
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
+            roomName = arguments.getString(ROOM_NAME)
             mParam2 = arguments.getString(ARG_PARAM2)
         }
     }
@@ -54,7 +59,7 @@ class RoomsFragment : Fragment() {
 
         val list = ArrayList<Room>()
         prepareList(list)
-        val adapter = CustomAdapter(context, list, devicesAdapter)
+        val adapter = RoomAdapter(context, list, devicesAdapter)
         adapter.list.add(Room("Add", R.drawable.ic_add_black_24dp, arrayListOf()))
         roomView.adapter = adapter
         roomView.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
@@ -102,7 +107,7 @@ class RoomsFragment : Fragment() {
     companion object {
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
+        private val ROOM_NAME = "param1"
         private val ARG_PARAM2 = "param2"
 
         /**
@@ -114,10 +119,10 @@ class RoomsFragment : Fragment() {
          * @return A new instance of fragment RoomsFragment.
          */
         // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String, param2: String): RoomsFragment {
+        fun newInstance(roomName: String?, param2: String?): RoomsFragment {
             val fragment = RoomsFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
+            args.putString(ROOM_NAME, roomName)
             args.putString(ARG_PARAM2, param2)
             fragment.arguments = args
             return fragment
@@ -125,9 +130,8 @@ class RoomsFragment : Fragment() {
     }
 
     private fun prepareList(list: ArrayList<Room>) {
-        val devices = arrayListOf(Device("Lampe1"), Device("Lampe2"))
-        list.add(Room("Wohnzimmer", R.drawable.ic_home_black_24dp, devices))
-        list.add(Room("Schlafzimmer", R.drawable.ic_dashboard_black_24dp, arrayListOf(Device("Foo"))))
+        val admin = DatabaseHelper(this.context, "admin", null, 1)
+        admin.queryForRooms(this.context)
     }
 
 }// Required empty public constructor

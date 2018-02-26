@@ -8,4 +8,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_room_headline">Add a room</string>
+    <string name="edit_room_name">Room name</string>
+    <string name="title_activity_edit_room">EditRoomActivity</string>
 </resources>

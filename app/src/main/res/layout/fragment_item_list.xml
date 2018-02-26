@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="just.de.smarthome.DevicesFragment"
+    tools:context="just.de.smarthome.screen.main.DevicesFragment"
     tools:listitem="@layout/fragment_item" />

@@ -1,4 +1,4 @@
-package just.de.smarthome
+package just.de.smarthome.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
-import just.de.smarthome.DevicesFragment.OnListFragmentInteractionListener
-import kotlinx.android.synthetic.main.fragment_item.view.*
+import just.de.smarthome.device.Device
+import just.de.smarthome.screen.main.DevicesFragment.OnListFragmentInteractionListener
+import just.de.smarthome.R
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.net.URL
 
