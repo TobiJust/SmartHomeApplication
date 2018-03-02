@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="just.de.smarthome.EditRoomActivity"
@@ -20,12 +20,22 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <EditText
+        android:id="@+id/roomName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
         android:hint="@string/edit_room_name"
         android:inputType="textPersonName"
-        android:textAlignment="center" />
+        android:textAlignment="center"/>
+
+    <GridView
+        android:id="@+id/roomIcons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="15dp"
+        android:layout_margin="20dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="15dp" />
 
 </LinearLayout>

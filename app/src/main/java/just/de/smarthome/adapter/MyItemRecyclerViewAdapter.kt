@@ -31,6 +31,7 @@ class MyItemRecyclerViewAdapter(var mValues: List<Device>, private val mListener
             when (isChecked) {
                 true -> {
                     Log.d("OnOff", "Checked")
+                    turnOn()
                     Toast.makeText(buttonView.context, "Checked", Toast.LENGTH_SHORT).show()
                 }
                 false -> Log.d("OnOff", "Not checked")

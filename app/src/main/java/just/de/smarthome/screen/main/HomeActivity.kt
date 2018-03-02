@@ -10,24 +10,16 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import just.de.smarthome.R
 import just.de.smarthome.device.Device
-import just.de.smarthome.room.Room
 import kotlinx.android.synthetic.main.activity_home.*
-import java.io.File
 
 class HomeActivity : AppCompatActivity(), RoomsFragment.OnFragmentInteractionListener, DevicesFragment.OnListFragmentInteractionListener {
 
-    var file:File? = null
-
     companion object {
 
-        val FILE_NAME = "just.de.smarthome.data"
         private const val ROOM_NAME = "room_name"
 
-
-        fun newIntent(context: Context, room: Room): Intent {
-            val intent = Intent(context, HomeActivity::class.java)
-            intent.putExtra(HomeActivity.ROOM_NAME, room.name)
-            return intent
+        fun newIntent(context: Context): Intent {
+            return Intent(context, HomeActivity::class.java)
         }
     }
 
@@ -57,7 +49,6 @@ class HomeActivity : AppCompatActivity(), RoomsFragment.OnFragmentInteractionLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        file = File(this.filesDir, FILE_NAME)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         val roomName = intent.getStringExtra(HomeActivity.ROOM_NAME)

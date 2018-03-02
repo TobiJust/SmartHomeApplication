@@ -12,24 +12,26 @@ import just.de.smarthome.R
 import just.de.smarthome.room.Room
 import kotlinx.android.synthetic.main.room_item_view.view.*
 
-class RoomAdapter(private val context : Context, val list : ArrayList<Room>, private val devicesAdapter: MyItemRecyclerViewAdapter) : RecyclerView.Adapter<RoomAdapter.ViewHolder>(){
+class RoomAdapter(private val context: Context, val list: ArrayList<Room>, private val devicesAdapter: MyItemRecyclerViewAdapter) : RecyclerView.Adapter<RoomAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var thumbImageView: ImageView = itemView.findViewById(R.id.thumbnail)
     }
-    override fun onCreateViewHolder(parent : ViewGroup, type : Int) : ViewHolder {
-        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.room_item_view, parent, false)
+
+    override fun onCreateViewHolder(parent: ViewGroup, type: Int): ViewHolder {
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.room_item_view, parent, false)
         val card = view.findViewById<CardView>(R.id.card_view)
         card.maxCardElevation = 2.0F
         card.radius = 5.0F
 
         return ViewHolder(view)
     }
-    override fun onBindViewHolder(holder : ViewHolder, position : Int){
-        val room : Room = list[position]
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val room: Room = list[position]
         holder.thumbImageView.setImageResource(room.image)
         holder.itemView.card_view.setOnClickListener {
-            if(position == list.size - 1) {
+            if (position == list.size - 1) {
                 createRoom()
             }
             devicesAdapter.mValues = room.devices
@@ -37,8 +39,8 @@ class RoomAdapter(private val context : Context, val list : ArrayList<Room>, pri
         }
     }
 
-    private fun addRoom(room : Room) {
-        list.add(list.size-1, room)
+    private fun addRoom(room: Room) {
+        list.add(list.size - 1, room)
         notifyDataSetChanged()
     }
 
@@ -47,7 +49,7 @@ class RoomAdapter(private val context : Context, val list : ArrayList<Room>, pri
         context.startActivity(intent)
     }
 
-    override fun getItemCount() : Int{
+    override fun getItemCount(): Int {
         return list.size
     }
 }

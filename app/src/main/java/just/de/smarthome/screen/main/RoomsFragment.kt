@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,20 +31,20 @@ class RoomsFragment : Fragment() {
     private var mParam2: String? = null
 
     private var mListener: OnFragmentInteractionListener? = null
-    private var listListener: DevicesFragment.OnListFragmentInteractionListener? = null
+
+    private lateinit var admin: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("RoomsFragment", "On Create")
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             roomName = arguments.getString(ROOM_NAME)
             mParam2 = arguments.getString(ARG_PARAM2)
         }
+        admin = DatabaseHelper(this.context, "admin", null, 1)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.d("RoomsFragment", "On Create View")
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_rooms, container, false)
     }
@@ -63,6 +62,15 @@ class RoomsFragment : Fragment() {
         adapter.list.add(Room("Add", R.drawable.ic_add_black_24dp, arrayListOf()))
         roomView.adapter = adapter
         roomView.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+
+       // if (devicesAdapter.mValues.isEmpty()) {
+        //     devicesView.visibility = View.GONE
+        //      emptyView.visibility = View.VISIBLE
+        //  }
+        //  else {
+        //       devicesView.visibility = View.VISIBLE
+        //       emptyView.visibility = View.GONE
+        //   }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -130,8 +138,8 @@ class RoomsFragment : Fragment() {
     }
 
     private fun prepareList(list: ArrayList<Room>) {
-        val admin = DatabaseHelper(this.context, "admin", null, 1)
-        admin.queryForRooms(this.context)
+        val rooms = admin.queryForRooms()
+        list.addAll(rooms)
     }
 
 }// Required empty public constructor
